@@ -107,13 +107,19 @@ let baseMaps = {
 
 // Create the map object with a center and zoom level.
 let map = L.map('mapid', {
-  center: [43.7, -79.3],
-  zoom: 11,
+  center: [39.5, -98.5],
+  zoom: 3,
   layers: [satelliteStreets]
 });
 
 // Pass our map layers into our layers control and add the layers control to the map.
 L.control.layers(baseMaps).addTo(map);
+
+// Retrieve the earthquake GeoJSON data.
+d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson").then(function(data) {
+  // Creating a GeoJSON layer with the retrieved data.
+  L.geoJson(data).addTo(map);
+});
 
 // // Then we add our 'graymap' tile layer to the map.
 // streets.addTo(map);
@@ -124,30 +130,30 @@ L.control.layers(baseMaps).addTo(map);
 // // Accessing the Toronto airline routes GeoJSON URL.
 // let torontoData = "https://raw.githubusercontent.com/obriencw/Mapping_Earthquakes/Mapping_GeoJSON_Linestrings/torontoRoutes.json";
 
-// Accessing the Toronto neighborhoods GeoJSON URL.
-let torontoHoods = "https://raw.githubusercontent.com/obriencw/Mapping_Earthquakes/Mapping_GeoJSON_Polygons/torontoNeighborhoods.json";
+// // Accessing the Toronto neighborhoods GeoJSON URL.
+// let torontoHoods = "https://raw.githubusercontent.com/obriencw/Mapping_Earthquakes/Mapping_GeoJSON_Polygons/torontoNeighborhoods.json";
 
-// Create a style for the lines.
-let myStyle = {
-  color: "blue",
-  weight: 1,
-  fillColor: "yellow"
+// // Create a style for the lines.
+// let myStyle = {
+//   color: "blue",
+//   weight: 1,
+//   fillColor: "yellow"
 
-}
+// }
 
-// Grabbing our GeoJSON data.
-d3.json(torontoHoods).then(function(data) {
-  console.log(data);
-// Creating a GeoJSON layer with the retrieved data.
-L.geoJson(data, {
-  style: myStyle,
-    // Called on each feature
-onEachFeature: function(feature, layer) {
-layer.bindPopup("<h2>" + "Neighborhood: " + feature.properties.AREA_NAME + "</h2>");
-  }
-}).addTo(map);
+// // Grabbing our GeoJSON data.
+// d3.json(torontoHoods).then(function(data) {
+//   console.log(data);
+// // Creating a GeoJSON layer with the retrieved data.
+// L.geoJson(data, {
+//   style: myStyle,
+//     // Called on each feature
+// onEachFeature: function(feature, layer) {
+// layer.bindPopup("<h2>" + "Neighborhood: " + feature.properties.AREA_NAME + "</h2>");
+//   }
+// }).addTo(map);
 
-});
+// });
 //   , {
 //   style: myStyle,
 
